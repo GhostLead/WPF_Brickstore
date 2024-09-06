@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WpfAppBrikszLego
+{
+    internal class Brick
+    {
+        string itemID;
+        string itemName;
+        string Category;
+        string Color;
+        int Qty;
+        public Brick(string sor)
+        {
+            string[] tomb = sor.Split(';');
+            itemID = tomb[0];
+            itemName = tomb[1];
+            Category = tomb[2];
+            Color = tomb[3];
+            Qty = int.Parse(tomb[4]);
+        }
+        public string ItemID => itemID;
+        public string ItemName => itemName;
+        public string CategoryName1 => Category;
+        public string ColorName1 => Color;
+        public int Qty1 => Qty;
+    }
+}
