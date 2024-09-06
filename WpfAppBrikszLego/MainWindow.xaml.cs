@@ -41,6 +41,9 @@ namespace WpfAppBrikszLego
             }
         }
 
-        
+        private void btnSzur_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

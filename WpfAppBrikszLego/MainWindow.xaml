@@ -17,12 +17,25 @@
         </Grid.ColumnDefinitions>
 
         <DataGrid x:Name="dgTabla" Grid.Column="0" Grid.Row="0" Margin="10,10,10,10"/>
-        <Button x:Name="btnBetoltes" Grid.Column="1" Grid.Row="0" Width="100" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,10,10,10" Content="Betöltés" FontSize="20" FontFamily="Times New Roman" FontWeight="DemiBold" Foreground="LightGreen" Background="Black" Click="btnBetoltes_Click"/>
-        <Label Content="Szűrés:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Foreground="White" FontWeight="DemiBold" FontFamily="Times New Roman" Width="80"/>
-        <TextBox x:Name="txt"/>
-        <!--Inputs-->
+        <Button x:Name="btnBetoltes" Grid.Column="1" Grid.Row="0" Width="100" Height="35" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,10,10,10" Content="Betöltés" FontSize="15" FontFamily="Times New Roman" FontWeight="DemiBold" Foreground="LightGreen" Background="Black" Click="btnBetoltes_Click"/>
         
-        <Button x:Name=""/>
+        <!--Inputs-->
+        <Label Content="ID:" Foreground="White" FontSize="10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,100"/>
+        <TextBox x:Name="txtID" Grid.Column="1" Grid.Row="0" Width="100" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" VerticalContentAlignment="center" HorizontalContentAlignment="Left" Margin="0,0,10,100"/>
+        
+        <Label Content="NAME:" Foreground="White" FontSize="10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,40"/>
+        <TextBox x:Name="txtNAME" Grid.Column="1" Grid.Row="0" Width="100" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" VerticalContentAlignment="center" HorizontalContentAlignment="Left" Margin="0,0,10,40"/>
+        
+        <Label Content="CATEGORY:" Foreground="White" FontSize="10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,-20"/>
+        <TextBox x:Name="txtCATEGORY" Grid.Column="1" Grid.Row="0" Width="100" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" VerticalContentAlignment="center" HorizontalContentAlignment="Left" Margin="0,0,10,-20"/>
+        
+        <Label Content="COLOR:" Foreground="White" FontSize="10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,-80"/>
+        <TextBox x:Name="txtCOLOR" Grid.Column="1" Grid.Row="0" Width="100" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" VerticalContentAlignment="center" HorizontalContentAlignment="Left" Margin="0,0,10,-80"/>
+        
+        <Label Content="QTY:" Foreground="White" FontSize="10" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,-140"/>
+        <TextBox x:Name="txtQTY" Grid.Column="1" Grid.Row="0" Width="100" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" VerticalContentAlignment="center" HorizontalContentAlignment="Left" Margin="0,0,10,-140"/>
+
+        <Button x:Name="btnSzur" Content="Szűrés" Grid.Row="0" Grid.Column="1" Width="75" Height="25" Background="LightCyan" Foreground="Black" FontSize="15" FontWeight="Bold" FontFamily="Times New Roman" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,210,0,0" Click="btnSzur_Click"/>
 
 
     </Grid>
