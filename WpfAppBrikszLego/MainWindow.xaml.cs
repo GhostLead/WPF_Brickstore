@@ -46,7 +46,7 @@ namespace WpfAppBrikszLego
                 {
                     MessageBox.Show("Ez a fájl nem megfelelő fomrátumú!");
                 }
-
+                 
                 
             }
         }
