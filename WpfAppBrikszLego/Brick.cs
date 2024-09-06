@@ -24,8 +24,8 @@ namespace WpfAppBrikszLego
         }
         public string ItemID => itemID;
         public string ItemName => itemName;
-        public string CategoryName1 => Category;
-        public string ColorName1 => Color;
+        public string CategoryName => Category;
+        public string ColorName => Color;
         public int Qty1 => Qty;
     }
 }

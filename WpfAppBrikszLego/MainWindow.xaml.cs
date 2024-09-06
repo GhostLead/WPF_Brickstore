@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,18 +33,57 @@ namespace WpfAppBrikszLego
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() == true)
             {
-                XDocument xaml = XDocument.Load(ofd.FileName);
-                foreach (var elem in xaml.Descendants("Item"))
+                try
                 {
-                    bricks.Add(new Brick($"{elem.Element("ItemID").Value};{elem.Element("ItemName").Value};{elem.Element("CategoryName").Value};{elem.Element("ColorName").Value};{elem.Element("Qty").Value};"));
+                    XDocument xaml = XDocument.Load(ofd.FileName);
+                    foreach (var elem in xaml.Descendants("Item"))
+                    {
+                        bricks.Add(new Brick($"{elem.Element("ItemID").Value};{elem.Element("ItemName").Value};{elem.Element("CategoryName").Value};{elem.Element("ColorName").Value};{elem.Element("Qty").Value};"));
+                    }
+                    dgTabla.ItemsSource = bricks;
                 }
-                dgTabla.ItemsSource = bricks;
+                catch (System.Xml.XmlException)
+                {
+                    MessageBox.Show("Ez a fájl nem megfelelő fomrátumú!");
+                }
+
+                
             }
         }
 
         private void btnSzur_Click(object sender, RoutedEventArgs e)
         {
-
+            if (bricks.Count >0)
+            {
+                if (txtID.Text != "")
+                {
+                    dgTabla.ItemsSource = bricks.Where(x => x.ItemID.StartsWith(txtID.Text));
+                }
+                else if (txtNAME.Text != "")
+                {
+                    dgTabla.ItemsSource = bricks.Where(x => x.ItemName.StartsWith(txtNAME.Text));
+                }
+                else if (txtCATEGORY.Text != "")
+                {
+                    dgTabla.ItemsSource = bricks.Where(x => x.CategoryName.StartsWith(txtCATEGORY.Text));
+                }
+                else if (txtCOLOR.Text != "")
+                {
+                    dgTabla.ItemsSource = bricks.Where(x => x.ColorName.StartsWith(txtCOLOR.Text));
+                }
+                else if (txtQTY.Text != "")
+                {
+                    dgTabla.ItemsSource = bricks.Where(x => x.Qty1 == int.Parse(txtQTY.Text));
+                }
+                else
+                {
+                    MessageBox.Show("Nincs ilyen!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nincs ilyen!");
+            }
         }
     }
 }
