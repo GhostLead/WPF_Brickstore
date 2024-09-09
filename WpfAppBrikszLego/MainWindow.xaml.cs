@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,9 +23,13 @@ namespace WpfAppBrikszLego
     public partial class MainWindow : Window
     {
         List<Brick> bricks = new List<Brick>();
+        
+
+
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         private void btnBetoltes_Click(object sender, RoutedEventArgs e)
@@ -46,43 +51,83 @@ namespace WpfAppBrikszLego
                 {
                     MessageBox.Show("Ez a fájl nem megfelelő fomrátumú!");
                 }
-                 
-                
+                finally
+                {
+                    List<string> categories = new List<string>();
+                    
+                    foreach (var item in bricks)
+                    {
+                        if (!categories.Contains(item.CategoryName))
+                        {
+                            categories.Add(item.CategoryName.ToString());
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    categories.Sort();
+                    categories.Insert(0,"WHATEVER");
+                    cbLista.ItemsSource = categories;
+                    cbLista.SelectedIndex = 0;
+                }
+
             }
+
+            
         }
 
-        private void btnSzur_Click(object sender, RoutedEventArgs e)
+        private void textChanged(object sender, RoutedEventArgs e)
         {
             if (bricks.Count >0)
             {
                 if (txtID.Text != "")
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.ItemID.StartsWith(txtID.Text));
+                    dgTabla.ItemsSource = bricks.Where(x => x.ItemID.ToLower().StartsWith(txtID.Text.ToLower()) && x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
                 }
-                else if (txtNAME.Text != "")
+                if (txtNAME.Text != "")
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.ItemName.StartsWith(txtNAME.Text));
+                    dgTabla.ItemsSource = bricks.Where(x => x.ItemName.ToLower().StartsWith(txtNAME.Text.ToLower()) && x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
                 }
-                else if (txtCATEGORY.Text != "")
+                if (cbLista.SelectedIndex != 0)
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.CategoryName.StartsWith(txtCATEGORY.Text));
+                    dgTabla.ItemsSource = bricks.Where(x => x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
                 }
-                else if (txtCOLOR.Text != "")
+                if (txtCOLOR.Text != "")
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.ColorName.StartsWith(txtCOLOR.Text));
+                    dgTabla.ItemsSource = bricks.Where(x => x.ColorName.ToLower().StartsWith(txtCOLOR.Text.ToLower()) && x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
                 }
-                else if (txtQTY.Text != "")
+                if (txtQTY.Text != "")
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.Qty1 == int.Parse(txtQTY.Text));
+                    dgTabla.ItemsSource = bricks.Where(x => x.Qty1 == int.Parse(txtQTY.Text) && x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
                 }
-                else
+                if (txtID.Text == "" && txtNAME.Text == "" && txtCOLOR.Text == "" && txtQTY.Text == "")
                 {
-                    MessageBox.Show("Nincs ilyen!");
+                    if (cbLista.SelectedIndex == 0)
+                    {
+                        dgTabla.ItemsSource = bricks;
+                    }
+                    else
+                    {
+                        dgTabla.ItemsSource = bricks.Where(x => x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Nincs ilyen!");
+                MessageBox.Show("Még nincs importálva fájl");
+            }
+        }
+
+        private void cbLista_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbLista.SelectedIndex == 0)
+            {
+                dgTabla.ItemsSource = bricks;
+            }
+            else
+            {
+                dgTabla.ItemsSource = bricks.Where(x => x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
             }
         }
     }
