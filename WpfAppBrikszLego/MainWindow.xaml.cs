@@ -79,45 +79,51 @@ namespace WpfAppBrikszLego
 
         private void textChanged(object sender, RoutedEventArgs e)
         {
-            if (bricks.Count >0)
+            if (bricks.Count > 0)
             {
-                if (txtID.Text != "")
+                IEnumerable<Brick> filteredList = bricks;
+
+                if (!string.IsNullOrWhiteSpace(txtID.Text))
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.ItemID.ToLower().StartsWith(txtID.Text.ToLower()) && x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
+                    filteredList = filteredList.Where(x => x.ItemID.ToLower().StartsWith(txtID.Text.ToLower()));
                 }
-                if (txtNAME.Text != "")
+
+                if (!string.IsNullOrWhiteSpace(txtNAME.Text))
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.ItemName.ToLower().StartsWith(txtNAME.Text.ToLower()) && x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
+                    filteredList = filteredList.Where(x => x.ItemName.ToLower().StartsWith(txtNAME.Text.ToLower()));
                 }
-                if (cbLista.SelectedIndex != 0)
+
+                if (!string.IsNullOrWhiteSpace(txtCOLOR.Text))
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
+                    filteredList = filteredList.Where(x => x.ColorName.ToLower().StartsWith(txtCOLOR.Text.ToLower()));
                 }
-                if (txtCOLOR.Text != "")
+
+                if (!string.IsNullOrWhiteSpace(txtQTY.Text) && int.TryParse(txtQTY.Text, out int qty))
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.ColorName.ToLower().StartsWith(txtCOLOR.Text.ToLower()) && x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
+                    filteredList = filteredList.Where(x => x.Qty1 == qty);
                 }
-                if (txtQTY.Text != "")
+
+                if (cbLista.SelectedIndex > 0)
                 {
-                    dgTabla.ItemsSource = bricks.Where(x => x.Qty1 == int.Parse(txtQTY.Text) && x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
+                    filteredList = filteredList.Where(x => x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
                 }
-                if (txtID.Text == "" && txtNAME.Text == "" && txtCOLOR.Text == "" && txtQTY.Text == "")
-                {
-                    if (cbLista.SelectedIndex == 0)
-                    {
-                        dgTabla.ItemsSource = bricks;
-                    }
-                    else
-                    {
-                        dgTabla.ItemsSource = bricks.Where(x => x.CategoryName.ToLower() == cbLista.SelectedItem.ToString().ToLower());
-                    }
-                }
+
+                var finalList = filteredList.ToList();
+                dgTabla.ItemsSource = finalList;
+
+                var categories = finalList.Select(x => x.CategoryName).Distinct().ToList();
+                categories.Sort();
+                categories.Insert(0, "WHATEVER");
+
+                cbLista.ItemsSource = categories;
+                cbLista.SelectedIndex = 0;
             }
             else
             {
                 MessageBox.Show("Még nincs importálva fájl");
             }
         }
+
 
         private void cbLista_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
